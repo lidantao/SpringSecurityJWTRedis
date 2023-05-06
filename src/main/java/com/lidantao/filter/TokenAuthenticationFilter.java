@@ -47,8 +47,14 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         // Redis 查找用户信息
         LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(userId);
 
+        // TODO 后面改成 DB
         // 存入 SecurityContextHolder，后面授权过滤器会去这里拿用户授权信息
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword(), loginUser.getAuthorities()));
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(
+                        loginUser.getUsername(),
+                        loginUser.getPassword(),
+                        loginUser.getAuthorities()
+                ));
 
         // 验证通过放行
         filterChain.doFilter(request, response);

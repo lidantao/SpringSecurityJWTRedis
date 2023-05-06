@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SpringTest {
 
     public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder().encode("zs"));
-        System.out.println(new BCryptPasswordEncoder().encode("ls"));
+        System.out.println(new BCryptPasswordEncoder().encode("admin"));
+        System.out.println(new BCryptPasswordEncoder().encode("user"));
     }
 }

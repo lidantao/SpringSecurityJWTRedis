@@ -33,7 +33,9 @@ public class LoginServiceImpl implements LoginService {
     public Map<String, String> login(User user) {
 
         // 调用 AuthenticationManager authenticate进行认证，认证通过后会存入到 SecurityContextHolder
-        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        Authentication authenticate = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+        );
 
         // 认证失败
         if(authenticate == null) throw new RuntimeException("用户名或者密码错误");

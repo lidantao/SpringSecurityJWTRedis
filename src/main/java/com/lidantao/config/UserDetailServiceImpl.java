@@ -8,7 +8,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * @author Cola
@@ -17,13 +19,24 @@ import java.util.HashMap;
 @Configuration
 public class UserDetailServiceImpl implements UserDetailsService {
 
+
+    // TODO ： DB
+
     // 替换成数据库查询即可
     public static HashMap<String, LoginUser> userCache = new HashMap<>();
     static { // {noop}表示不加密，不然会报错（因为默认需要指定密码加密方法）
         //userCache.put("zs", new LoginUser(new User("1", "zs", "{noop}zs")));
         //userCache.put("ls", new LoginUser(new User("2", "ls", "{noop}ls")));
-        userCache.put("zs", new LoginUser(new User("1", "zs", "$2a$10$E4r2s/Gm0sTmjx/g41mFVOMYwAq/wG.US0J./77KTOD4wxsiLcera")));
-        userCache.put("ls", new LoginUser(new User("2", "ls", "$2a$10$WyDvGDvtuSFk/VRt5R3pGu94YRcYBeutWNJCt6AHVhx0XlaTZdLGu")));
+
+        // TODO ：后面改成 DB
+        HashSet<String> admin = new HashSet<>();
+        HashSet<String> user = new HashSet<>();
+        admin.add("admin");
+        admin.add("user");
+        user.add("user");
+
+        userCache.put("admin", new LoginUser(new User("1", "admin", "$2a$10$CTR9tTCjzITWgkAJ3Ll8weGy36Kvw8QZqp7mZmUlFHH4CLJo4cPIK"), admin));
+        userCache.put("user", new LoginUser(new User("2", "user", "$2a$10$ZZabm1j29eUR7YkK/9FoX.lS4q.M9Qk6xijb94oFcB4/tSanCeE2e"), user));
     }
 
     @Override
