@@ -16,7 +16,7 @@
 - 第二次访问：
     - 客户端在请求头携带token，服务端进行校验；
 ##### 退出功能
-客户端携带token，访问退出接口，服务端校验token有效性，然后根据userId清除以下两个存储：
+- 客户端携带token，访问退出接口，服务端校验token有效性，然后根据userId清除以下两个存储：
     - Redis用户信息
     - SecurityContextHolder用户信息
    
