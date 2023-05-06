@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class UserDetailServiceImpl implements UserDetailsService {
 
     // 替换成数据库查询即可
-    private static HashMap<String, LoginUser> userCache = new HashMap<>();
+    public static HashMap<String, LoginUser> userCache = new HashMap<>();
     static { // {noop}表示不加密，不然会报错（因为默认需要指定密码加密方法）
         //userCache.put("zs", new LoginUser(new User("1", "zs", "{noop}zs")));
         //userCache.put("ls", new LoginUser(new User("2", "ls", "{noop}ls")));

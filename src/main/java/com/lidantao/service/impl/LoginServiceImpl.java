@@ -1,8 +1,9 @@
-package com.lidantao.service;
+package com.lidantao.service.impl;
 
 import com.lidantao.config.RedisConfig;
 import com.lidantao.entity.LoginUser;
 import com.lidantao.entity.User;
+import com.lidantao.service.LoginService;
 import com.lidantao.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.cache.RedisCache;
@@ -20,7 +21,7 @@ import java.util.Map;
  * @Date 2023年05月05日 12:04:00
  */
 @Service
-public class LoginServiceImpl implements LoginService{
+public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -31,7 +32,7 @@ public class LoginServiceImpl implements LoginService{
     @Override
     public Map<String, String> login(User user) {
 
-        // 调用 AuthenticationManager authenticate进行认证
+        // 调用 AuthenticationManager authenticate进行认证，认证通过后会存入到 SecurityContextHolder
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 
         // 认证失败
