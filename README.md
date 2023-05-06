@@ -1,12 +1,12 @@
-使用 SpringSecurity + Redis + JWT 构建安全 认证+授权 中心。
+# 使用 SpringSecurity + Redis + JWT 构建安全 认证+授权 中心。
 
-# SpringSecurity-2.5.0版本，目前具有15个过滤器。其中具有三个核心的过滤器，分别是：
+## SpringSecurity-2.5.0版本，目前具有15个过滤器。其中具有三个核心的过滤器，分别是：
 1. 认证过滤器：UsernamePasswordAuthenticationFilter
 2. 授权过滤器：FiterSecurityInterceptor
 3. 异常过滤器：ExceptionTranslationFilter
 
 
-# 核心逻辑
+## 核心逻辑
 1. 认证逻辑（✔）
 - 第一次访问：
     - 客户端携带用户名、密码，服务端进行校验；
