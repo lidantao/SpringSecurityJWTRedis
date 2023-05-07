@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -19,7 +20,7 @@ public class LoginController {
     private LoginService loginService;
 
     @RequestMapping("/user/login")
-    public Map<String, String> login(User user){
-        return loginService.login(user);
+    public Map<String, String> login(User user, HttpServletRequest request){
+        return loginService.login(user, request);
     }
 }

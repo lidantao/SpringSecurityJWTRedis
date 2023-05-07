@@ -1,7 +1,9 @@
 package com.lidantao.filter;
 
 import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.lidantao.entity.LoginUser;
+import com.lidantao.service.impl.LoginServiceImpl;
 import com.lidantao.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -30,6 +32,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
         // 获取 token
         String token = request.getHeader("token");
 
@@ -39,13 +42,27 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
+
         // 验证 token
-        Claim claim = JWTUtils.parseJWT(token);
-        String userId = claim.asString();
+        DecodedJWT decodedJWT = JWTUtils.parseJWT(token);
+        String userId = decodedJWT.getClaim("userId").asString();
+        String ipAddress = decodedJWT.getClaim("ipAddress").asString();
+        String currIpAddress = LoginServiceImpl.getIpAddress(request);
 
 
-        // Redis 查找用户信息
+        // 校验当前持有token的用户ip地址是否等于当初认证的ip地址
+        if(!currIpAddress.equals(ipAddress)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // Redis 查找是否存在该用户
         LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(userId);
+        if(loginUser == null) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
 
         // TODO 后面改成 DB
         // 存入 SecurityContextHolder，后面授权过滤器会去这里拿用户授权信息
