@@ -20,4 +20,5 @@
     - Redis用户信息
     - SecurityContextHolder用户信息
    
-2. 授权逻辑（❌）
+2. 授权逻辑（✔）
+- 当用户认证通过之后，访问菜单接口需要进行鉴权操作。因此在认证通过之后，将用户的权限信息存储在SecurityContextHolder，等待鉴权时校验。
